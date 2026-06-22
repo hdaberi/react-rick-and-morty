@@ -1,6 +1,18 @@
+import Navbar from "./components/Navbar";
+import CharacterDetail from "./components/CharacterDetil";
+import CharacterLists from "./components/CharacterLists";
+import { allCharacters } from "../data/data.js";
 import "./App.css";
 
 function App() {
-  return <h1 style={{ color: "#fff" }}>03: Rick and Morty starter file</h1>;
+  return (
+    <div className="App">
+      <Navbar />
+      <div className="main">
+        <CharacterLists allCharacters={allCharacters} />
+        <CharacterDetail />
+      </div>
+    </div>
+  );
 }
 export default App;
