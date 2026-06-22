@@ -1,7 +1,7 @@
 import Navbar from "./components/Navbar";
 import CharacterDetail from "./components/CharacterDetil";
 import CharacterLists from "./components/CharacterLists";
-import { allCharacters } from "../data/data.js";
+import { allCharacters, character } from "../data/data.js";
 import "./App.css";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <Navbar />
       <div className="main">
         <CharacterLists allCharacters={allCharacters} />
-        <CharacterDetail />
+        <CharacterDetail character={character} />
       </div>
     </div>
   );

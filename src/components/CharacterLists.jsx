@@ -1,8 +1,4 @@
-import {
-  EyeIcon,
-  UserMinusIcon,
-  UserPlusIcon,
-} from "@heroicons/react/24/outline";
+import { EyeIcon } from "@heroicons/react/24/outline";
 
 function CharacterLists({ allCharacters }) {
   return (

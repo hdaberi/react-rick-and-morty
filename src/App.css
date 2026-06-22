@@ -114,7 +114,9 @@
 .icon.red {
   color: var(--rose-500);
 }
-
+.flex-1 {
+  flex: 1;
+}
 .name,
 .info {
   color: var(--slate-200);
