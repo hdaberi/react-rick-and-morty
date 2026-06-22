@@ -105,6 +105,11 @@
   grid-row: 1/3;
   align-self: center;
 }
+.gender-icon .icon {
+  grid-column: 1/4;
+  grid-row: 1/3;
+  align-self: center;
+}
 
 .icon.red {
   color: var(--rose-500);
