@@ -1,3 +1,6 @@
+import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
+import { episodes } from "../../data/data";
+
 function CharacterDetail({ character }) {
   return (
     <div className="flex-1">
@@ -25,7 +28,25 @@ function CharacterDetail({ character }) {
           </div>
         </div>
       </div>
-      <div className="character-episodes"></div>
+      <div className="character-episodes">
+        <div className="title">
+          <h2>List of episode : </h2>
+          <button>
+            <ArrowUpCircleIcon className="icon" />
+          </button>
+        </div>
+        <ul>
+          {episodes.map((item, index) => (
+            <li key={item.id}>
+              <div>
+                {String(index + 1).padStart(2, 0)} - {item.episode} :{" "}
+                <strong>{item.name}</strong>
+              </div>
+              <div className="badge badge--secondary">{item.air_date}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
