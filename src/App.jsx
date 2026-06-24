@@ -4,8 +4,9 @@ import CharacterLists from "./components/CharacterLists";
 import { character } from "../data/data.js";
 import { useEffect } from "react";
 import { useState } from "react";
-import "./App.css";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import "./App.css";
 
 function App() {
   const [allCharacters, setAllCharacters] = useState([]);
@@ -14,17 +15,12 @@ function App() {
     async function fetchData() {
       try {
         setIsLoading(true);
-        const response = await fetch(
+        const { data } = await axios.get(
           "https://rickandmortyapi.com/api/character",
         );
-        if (!response.ok)
-          throw new Error(
-            `Request failed: ${response.status} ${response.statusText}`,
-          );
-        const data = await response.json();
         setAllCharacters(data.results.slice(0, 5));
       } catch (error) {
-        toast.error(error.message, {
+        toast.error(error.response.data.error, {
           position: "top-right",
         });
       } finally {
