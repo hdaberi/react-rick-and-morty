@@ -17,7 +17,10 @@ function App() {
         const response = await fetch(
           "https://rickandmortyapi.com/api/character",
         );
-        if (!response.ok) throw new Error("Something went wrong !");
+        if (!response.ok)
+          throw new Error(
+            `Request failed: ${response.status} ${response.statusText}`,
+          );
         const data = await response.json();
         setAllCharacters(data.results.slice(0, 5));
       } catch (error) {
