@@ -1,7 +1,6 @@
 import Navbar, { SearchResult, SearchInput } from "./components/Navbar";
 import CharacterDetail from "./components/CharacterDetil";
 import CharacterLists from "./components/CharacterLists";
-import { character } from "../data/data.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -12,6 +11,8 @@ function App() {
   const [allCharacters, setAllCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
+  const [selectId, setSelectId] = useState(null);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -31,6 +32,10 @@ function App() {
     fetchData();
   }, [query]);
 
+  const handleCharacterId = (id) => {
+    setSelectId((prevId) => (prevId === id ? null : id));
+  };
+
   return (
     <div className="App">
       <Toaster />
@@ -42,8 +47,10 @@ function App() {
         <CharacterLists
           allCharacters={allCharacters}
           isLoading={isLoading}
+          onSelectId={handleCharacterId}
+          selectId={selectId}
         />
-        <CharacterDetail character={character} />
+        <CharacterDetail selectId={selectId} />
       </Main>
     </div>
   );
