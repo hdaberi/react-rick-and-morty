@@ -4,7 +4,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "./Loading";
 
-function CharacterDetail({ selectId }) {
+function CharacterDetail({ selectId, onAddFavourit, isFavourite }) {
   const [selectCharacter, setselectCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -24,7 +24,6 @@ function CharacterDetail({ selectId }) {
           `https://rickandmortyapi.com/api/episode/${episodeId}`,
         );
         setEpisodes([episodeData].flat().slice(0, 5));
-
       } catch (error) {
         toast.error(error.response.data.error, {
           position: "top-right",
@@ -57,6 +56,7 @@ function CharacterDetail({ selectId }) {
         />
         <div className="character-detail__info">
           <h3 className="name">{selectCharacter.name}</h3>
+          
           <div className="info">
             <span
               className={`status ${selectCharacter.status === "Dead" ? "red" : ""}`}
@@ -64,12 +64,23 @@ function CharacterDetail({ selectId }) {
             <span> {selectCharacter.status}</span>
             <span> - {selectCharacter.species}</span>
           </div>
+
           <div className="location">
             <p>Last know location :</p>
             <p>{selectCharacter.location.name}</p>
           </div>
+
           <div className="actions">
-            <button className="btn btn--primary">Add to favourit</button>
+            {isFavourite ? (
+              <p>Character has alredy add to favourite</p>
+            ) : (
+              <button
+                onClick={() => onAddFavourit(selectCharacter)}
+                className="btn btn--primary"
+              >
+                Add to favourit
+              </button>
+            )}
           </div>
         </div>
       </div>

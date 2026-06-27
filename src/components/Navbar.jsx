@@ -6,10 +6,6 @@ function Navbar({ children }) {
       <div className="navbar__logo">LOGO</div>
 
       {children}
-      <button className="heart">
-        <HeartIcon className="icon" />
-        <span className="badge">4</span>
-      </button>
     </nav>
   );
 }
@@ -28,5 +24,13 @@ export function SearchInput({ query, setQuery }) {
       className="text-field"
       placeholder="Search..."
     />
+  );
+}
+export function Favourite({ favouritesLength }) {
+  return (
+    <button className="heart">
+      <HeartIcon className="icon" />
+      <span className="badge">{favouritesLength}</span>
+    </button>
   );
 }
