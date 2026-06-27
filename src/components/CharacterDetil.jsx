@@ -48,63 +48,79 @@ function CharacterDetail({ selectId, onAddFavourit, isFavourite }) {
   return (
     <div className="flex-1">
       <Toaster />
-      <div className="character-detail">
-        <img
-          src={selectCharacter.image}
-          alt={selectCharacter.name}
-          className="character-detail__img"
-        />
-        <div className="character-detail__info">
-          <h3 className="name">{selectCharacter.name}</h3>
-          
-          <div className="info">
-            <span
-              className={`status ${selectCharacter.status === "Dead" ? "red" : ""}`}
-            ></span>
-            <span> {selectCharacter.status}</span>
-            <span> - {selectCharacter.species}</span>
-          </div>
-
-          <div className="location">
-            <p>Last know location :</p>
-            <p>{selectCharacter.location.name}</p>
-          </div>
-
-          <div className="actions">
-            {isFavourite ? (
-              <p>Character has alredy add to favourite</p>
-            ) : (
-              <button
-                onClick={() => onAddFavourit(selectCharacter)}
-                className="btn btn--primary"
-              >
-                Add to favourit
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="character-episodes">
-        <div className="title">
-          <h2>List of episode : </h2>
-          <button>
-            <ArrowUpCircleIcon className="icon" />
-          </button>
-        </div>
-        <ul>
-          {episodes.map((item, index) => (
-            <li key={item.id}>
-              <div>
-                {String(index + 1).padStart(2, 0)} - {item.episode} :{" "}
-                <strong>{item.name}</strong>
-              </div>
-              <div className="badge badge--secondary">{item.air_date}</div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <CharachtersDetail
+        onAddFavourit={onAddFavourit}
+        isFavourite={isFavourite}
+        selectCharacters={selectCharacter}
+      />
+      <Episodes episodes={episodes} />
     </div>
   );
 }
 
 export default CharacterDetail;
+
+function CharachtersDetail({ onAddFavourit, isFavourite, selectCharacters }) {
+  return (
+    <div className="character-detail">
+      <img
+        src={selectCharacters.image}
+        alt={selectCharacters.name}
+        className="character-detail__img"
+      />
+      <div className="character-detail__info">
+        <h3 className="name">{selectCharacters.name}</h3>
+
+        <div className="info">
+          <span
+            className={`status ${selectCharacters.status === "Dead" ? "red" : ""}`}
+          ></span>
+          <span> {selectCharacters.status}</span>
+          <span> - {selectCharacters.species}</span>
+        </div>
+
+        <div className="location">
+          <p>Last know location :</p>
+          <p>{selectCharacters.location.name}</p>
+        </div>
+
+        <div className="actions">
+          {isFavourite ? (
+            <p>Character has alredy add to favourite</p>
+          ) : (
+            <button
+              onClick={() => onAddFavourit(selectCharacters)}
+              className="btn btn--primary"
+            >
+              Add to favourit
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Episodes({ episodes }) {
+  return (
+    <div className="character-episodes">
+      <div className="title">
+        <h2>List of episode : </h2>
+        <button>
+          <ArrowUpCircleIcon className="icon" />
+        </button>
+      </div>
+      <ul>
+        {episodes.map((item, index) => (
+          <li key={item.id}>
+            <div>
+              {String(index + 1).padStart(2, 0)} - {item.episode} :{" "}
+              <strong>{item.name}</strong>
+            </div>
+            <div className="badge badge--secondary">{item.air_date}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
