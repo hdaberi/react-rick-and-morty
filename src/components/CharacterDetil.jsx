@@ -4,7 +4,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "./Loading";
 
-function CharacterDetail({ selectId, onAddFavourit, isFavourite }) {
+function CharacterDetail({ selectId, onAddFavourit, isFavourite,onRemoveFavourit }) {
   const [selectCharacter, setselectCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -52,6 +52,7 @@ function CharacterDetail({ selectId, onAddFavourit, isFavourite }) {
         onAddFavourit={onAddFavourit}
         isFavourite={isFavourite}
         selectCharacters={selectCharacter}
+        onRemoveFavourit={onRemoveFavourit}
       />
       <Episodes episodes={episodes} />
     </div>
@@ -60,7 +61,7 @@ function CharacterDetail({ selectId, onAddFavourit, isFavourite }) {
 
 export default CharacterDetail;
 
-function CharachtersDetail({ onAddFavourit, isFavourite, selectCharacters }) {
+function CharachtersDetail({ onAddFavourit, isFavourite, selectCharacters,onRemoveFavourit }) {
   return (
     <div className="character-detail">
       <img
@@ -86,7 +87,12 @@ function CharachtersDetail({ onAddFavourit, isFavourite, selectCharacters }) {
 
         <div className="actions">
           {isFavourite ? (
-            <p>Character has alredy add to favourite</p>
+            <button
+              onClick={() => onRemoveFavourit(selectCharacters)}
+              className="btn btn--primary"
+            >
+              Remove to favourit
+            </button>
           ) : (
             <button
               onClick={() => onAddFavourit(selectCharacters)}

@@ -46,7 +46,10 @@ function App() {
       return [...prevFav, char];
     });
   };
-  console.log(favourites);
+
+  const handleRemoveFavourit = (char) => {
+    setFavourites((prevFav) => prevFav.filter((fav) => fav.id !== char.id));
+  };
 
   const isFavourite = favourites.map((fav) => fav.id).includes(selectId);
 
@@ -69,6 +72,7 @@ function App() {
           selectId={selectId}
           onAddFavourit={handleAddFavourit}
           isFavourite={isFavourite}
+          onRemoveFavourit={handleRemoveFavourit}
         />
       </Main>
     </div>
