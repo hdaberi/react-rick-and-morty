@@ -19,22 +19,39 @@ function App() {
   const [favourites, setFavourites] = useState([]);
 
   useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
     async function fetchData() {
       try {
         setIsLoading(true);
         const { data } = await axios.get(
           `https://rickandmortyapi.com/api/character?name=${query}`,
+          {
+            cancelToken: source.token,
+          },
         );
         setAllCharacters(data.results.slice(0, 5));
       } catch (error) {
-        toast.error(error.response.data.error, {
-          position: "top-right",
-        });
+
+        if (!axios.isCancel(error)) {
+          toast.error(error.response.data.error, {
+            position: "top-right",
+          });
+        } else {
+          console.log("successfully aborted");
+        }
+        
       } finally {
         setIsLoading(false);
       }
     }
     fetchData();
+
+    return () => {
+      // cancel the request before component unmounts
+      source.cancel();
+    };
   }, [query]);
 
   const handleCharacterId = (id) => {

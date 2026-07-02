@@ -211,7 +211,9 @@
   align-items: center;
   justify-content: center;
 }
-
+.character-episodes .title .icon.rotate {
+  rotate: 180deg;
+}
 .character-episodes h2 {
   color: var(--slate-400);
   margin-bottom: 0.6rem;

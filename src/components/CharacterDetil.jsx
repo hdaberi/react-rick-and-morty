@@ -4,7 +4,12 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "./Loading";
 
-function CharacterDetail({ selectId, onAddFavourit, isFavourite,onRemoveFavourit }) {
+function CharacterDetail({
+  selectId,
+  onAddFavourit,
+  isFavourite,
+  onRemoveFavourit,
+}) {
   const [selectCharacter, setselectCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -61,7 +66,12 @@ function CharacterDetail({ selectId, onAddFavourit, isFavourite,onRemoveFavourit
 
 export default CharacterDetail;
 
-function CharachtersDetail({ onAddFavourit, isFavourite, selectCharacters,onRemoveFavourit }) {
+function CharachtersDetail({
+  onAddFavourit,
+  isFavourite,
+  selectCharacters,
+  onRemoveFavourit,
+}) {
   return (
     <div className="character-detail">
       <img
@@ -108,16 +118,27 @@ function CharachtersDetail({ onAddFavourit, isFavourite, selectCharacters,onRemo
 }
 
 function Episodes({ episodes }) {
+  const [sortBy, setSortBy] = useState(true);
+  let sortedEpisodes;
+  if (sortBy) {
+    sortedEpisodes = [...episodes].sort(
+      (a, b) => new Date(a.created) - new Date(b.created),
+    );
+  } else {
+    sortedEpisodes = [...episodes].sort(
+      (a, b) => new Date(b.created) - new Date(a.created),
+    );
+  }
   return (
     <div className="character-episodes">
       <div className="title">
         <h2>List of episode : </h2>
-        <button>
-          <ArrowUpCircleIcon className="icon" />
+        <button onClick={() => setSortBy((is) => !is)}>
+          <ArrowUpCircleIcon className={`icon ${sortBy ? "rotate" : ""}`} />
         </button>
       </div>
       <ul>
-        {episodes.map((item, index) => (
+        {sortedEpisodes.map((item, index) => (
           <li key={item.id}>
             <div>
               {String(index + 1).padStart(2, 0)} - {item.episode} :{" "}
