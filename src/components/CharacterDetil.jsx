@@ -98,7 +98,7 @@ function CharachtersDetail({
         <div className="actions">
           {isFavourite ? (
             <button
-              onClick={() => onRemoveFavourit(selectCharacters)}
+              onClick={() => onRemoveFavourit(selectCharacters.id)}
               className="btn btn--primary"
             >
               Remove to favourit

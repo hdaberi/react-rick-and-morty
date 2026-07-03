@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from "./Modal";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { Character } from "./CharacterLists";
+import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 function Navbar({ children }) {
   return (
@@ -29,13 +30,26 @@ export function SearchInput({ query, setQuery }) {
   );
 }
 
-export function Favourite({ favourites }) {
+export function Favourite({ favourites, onRemoveFavourit }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       {isOpen && (
         <Modal open={isOpen} onOpen={setIsOpen}>
-          <p>This is a modal component.</p>
+          {favourites.length ? (
+            favourites.map((item) => (
+              <Character key={item.id} item={item}>
+                <button
+                  onClick={() => onRemoveFavourit(item.id)}
+                  className="icon red"
+                >
+                  <TrashIcon />
+                </button>
+              </Character>
+            ))
+          ) : (
+            <p className="empty">No favourite character</p>
+          )}
         </Modal>
       )}
 

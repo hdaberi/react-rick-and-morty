@@ -3,7 +3,7 @@ import { XCircleIcon } from "@heroicons/react/24/outline";
 function Modal({ children, onOpen, open }) {
   return (
     <>
-      <div className="backdrop"></div>
+      <div className="backdrop" onClick={() => onOpen(() => false)}></div>
 
       <div className="modal">
         <div className="modal__header">

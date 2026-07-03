@@ -61,8 +61,8 @@ function App() {
     });
   };
 
-  const handleRemoveFavourit = (char) => {
-    setFavourites((prevFav) => prevFav.filter((fav) => fav.id !== char.id));
+  const handleRemoveFavourit = (id) => {
+    setFavourites((prevFav) => prevFav.filter((fav) => fav.id !== id));
   };
 
   const isFavourite = favourites.map((fav) => fav.id).includes(selectId);
@@ -74,7 +74,10 @@ function App() {
       <Navbar>
         <SearchInput query={query} setQuery={setQuery} />
         <SearchResult numOfResult={allCharacters.length} />
-        <Favourite favourites={favourites} />
+        <Favourite
+          favourites={favourites}
+          onRemoveFavourit={handleRemoveFavourit}
+        />
       </Navbar>
       <Main>
         <CharacterLists
@@ -82,7 +85,7 @@ function App() {
           isLoading={isLoading}
           onSelectId={handleCharacterId}
           selectId={selectId}
-        />
+        ></CharacterLists>
         <CharacterDetail
           selectId={selectId}
           onAddFavourit={handleAddFavourit}
