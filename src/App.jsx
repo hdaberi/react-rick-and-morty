@@ -10,7 +10,6 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import "./App.css";
-import Modal from "./components/Modal";
 
 function App() {
   const [allCharacters, setAllCharacters] = useState([]);
@@ -18,7 +17,6 @@ function App() {
   const [query, setQuery] = useState("");
   const [selectId, setSelectId] = useState(null);
   const [favourites, setFavourites] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -72,13 +70,11 @@ function App() {
   return (
     <div className="App">
       <Toaster />
-      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <p>This is a modal component.</p>
-      </Modal>
+
       <Navbar>
         <SearchInput query={query} setQuery={setQuery} />
         <SearchResult numOfResult={allCharacters.length} />
-        <Favourite favourites={favourites} setIsOpen={setIsOpen} />
+        <Favourite favourites={favourites} />
       </Navbar>
       <Main>
         <CharacterLists

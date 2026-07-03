@@ -1,8 +1,8 @@
+import { useState } from "react";
+import Modal from "./Modal";
 import { HeartIcon } from "@heroicons/react/24/outline";
 
-
 function Navbar({ children }) {
-
   return (
     <nav className="navbar">
       <div className="navbar__logo">LOGO</div>
@@ -28,11 +28,21 @@ export function SearchInput({ query, setQuery }) {
     />
   );
 }
-export function Favourite({ favourites ,setIsOpen}) {
+
+export function Favourite({ favourites }) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <button className="heart" onClick={() => setIsOpen((is) => !is)}>
-      <HeartIcon className="icon" />
-      <span className="badge">{favourites.length}</span>
-    </button>
+    <>
+      {isOpen && (
+        <Modal open={isOpen} onOpen={setIsOpen}>
+          <p>This is a modal component.</p>
+        </Modal>
+      )}
+
+      <button className="heart" onClick={() => setIsOpen((is) => !is)}>
+        <HeartIcon className="icon" />
+        <span className="badge">{favourites.length}</span>
+      </button>
+    </>
   );
 }

@@ -85,7 +85,6 @@ button {
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: 1px 1px 50px var(--slate-600);
-  z-index: 999;
 }
 
 .modal__header {
@@ -117,11 +116,9 @@ button {
 }
 
 .backdrop {
+  width: 100vw;
+  height: 100vh;
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+  background-color: rgba(63, 69, 76, 0.8);
 }
