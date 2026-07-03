@@ -134,7 +134,7 @@ function Episodes({ episodes }) {
       <div className="title">
         <h2>List of episode : </h2>
         <button onClick={() => setSortBy((is) => !is)}>
-          <ArrowUpCircleIcon className={`icon ${sortBy ? "rotate" : ""}`} />
+          <ArrowUpCircleIcon className={`icon ${sortBy ? "" : "rotate"}`} />
         </button>
       </div>
       <ul>
