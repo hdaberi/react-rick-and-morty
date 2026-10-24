@@ -1,108 +1,71 @@
 import Navbar, {
+  NavbarFavourite,
+  NavbarSearch,
   SearchResult,
-  SearchInput,
-  Favourite,
 } from "./components/Navbar";
-import CharacterDetail from "./components/CharacterDetil";
-import CharacterLists from "./components/CharacterLists";
-import { useEffect } from "react";
-import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+import CharacterList from "./components/CharacterList";
+import CharacterDetail from "./components/CharacterDetail";
+
 import "./App.css";
+import { useState } from "react";
+import { Toaster } from "react-hot-toast";
+
+import useCharachters from "./hooks/useCharachters";
+import useLocalstorage from "./hooks/useLocalstorage";
 
 function App() {
-  const [allCharacters, setAllCharacters] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectId, setSelectId] = useState(null);
-  const [favourites, setFavourites] = useState(()=> {
-    const storedFavourites = localStorage.getItem("favourites");
-    return storedFavourites ? JSON.parse(storedFavourites) : [];
-  });
 
-  useEffect(() => {
-    localStorage.setItem("favourites", JSON.stringify(favourites));
-  }, [favourites]);
+  const { characters, isLoading } = useCharachters(query);
+  const { favourite, setFavourite } = useLocalstorage();
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchData() {
-      try {
-        setIsLoading(true);
-        const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character?name=${query}`,
-          {
-            signal: controller.signal,
-          },
-        );
-        setAllCharacters(data.results.slice(0, 5));
-      } catch (error) {
-        if (!axios.isCancel(error)) {
-          toast.error(error.response.data.error, {
-            position: "top-right",
-          });
-        } else {
-          console.log("successfully aborted");
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchData();
-
-    return () => {
-      // cancel the request before component unmounts
-      controller.abort();
-    };
-  }, [query]);
-
-  const handleCharacterId = (id) => {
+  const handleSelectId = (id) => {
     setSelectId((prevId) => (prevId === id ? null : id));
   };
 
-  const handleAddFavourit = (char) => {
-    setFavourites((prevFav) => {
-      return [...prevFav, char];
-    });
+  const handleAddFavourite = (char) => {
+    setFavourite((prevFav) => [...prevFav, char]);
   };
 
-  const handleRemoveFavourit = (id) => {
-    setFavourites((prevFav) => prevFav.filter((fav) => fav.id !== id));
+  const handleRemoveFavourite = (char) => {
+    setFavourite((prevFav) => prevFav.filter((fav) => fav.id !== char.id));
   };
+  const isAddFavourite = favourite.map((fav) => fav.id).includes(selectId);
 
-  const isFavourite = favourites.map((fav) => fav.id).includes(selectId);
+
 
   return (
-    <div className="App">
+    <div className="app">
       <Toaster />
 
       <Navbar>
-        <SearchInput query={query} setQuery={setQuery} />
-        <SearchResult numOfResult={allCharacters.length} />
-        <Favourite
-          favourites={favourites}
-          onRemoveFavourit={handleRemoveFavourit}
+        <NavbarSearch query={query} setQuery={setQuery} />
+        <SearchResult numOfResult={characters.length} />
+        <NavbarFavourite
+          navbarFavouriteItem={favourite}
+          onRemoveFavourit={handleRemoveFavourite}
         />
       </Navbar>
       <Main>
-        <CharacterLists
-          allCharacters={allCharacters}
+        <CharacterList
+          characters={characters}
           isLoading={isLoading}
-          onSelectId={handleCharacterId}
+          onSelectedId={handleSelectId}
           selectId={selectId}
-        ></CharacterLists>
+        />
+
         <CharacterDetail
           selectId={selectId}
-          onAddFavourit={handleAddFavourit}
-          isFavourite={isFavourite}
-          onRemoveFavourit={handleRemoveFavourit}
+          onAddFavourit={handleAddFavourite}
+          isAddFavourite={isAddFavourite}
+          onRemoveFavourit={handleRemoveFavourite}
         />
       </Main>
     </div>
   );
 }
+
 export default App;
 
 function Main({ children }) {

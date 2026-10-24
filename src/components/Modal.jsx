@@ -1,15 +1,15 @@
 import { XCircleIcon } from "@heroicons/react/24/outline";
 
-function Modal({ children, onOpen, open }) {
+function Modal({ title, children, open, onOpen }) {
+  if (!open) return null;
   return (
     <>
-      <div className="backdrop" onClick={() => onOpen(() => false)}></div>
-
+      <div className="backdrop" onClick={() => onOpen(false)}></div>
       <div className="modal">
         <div className="modal__header">
-          <h2 className="modal__title">Modal Title{console.log(open)}</h2>
-          <button className="modal__close" onClick={() => onOpen(() => false)}>
-            <XCircleIcon className="icon close" />
+          <h2 className="title">{title}</h2>
+          <button>
+            <XCircleIcon className="icon close" onClick={() => onOpen(false)} />
           </button>
         </div>
         {children}
@@ -17,4 +17,5 @@ function Modal({ children, onOpen, open }) {
     </>
   );
 }
+
 export default Modal;
