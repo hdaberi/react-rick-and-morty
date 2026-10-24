@@ -18,7 +18,7 @@ function App() {
   const [selectId, setSelectId] = useState(null);
 
   const { characters, isLoading } = useCharachters(query);
-  const { favourite, setFavourite } = useLocalstorage();
+  const [favourite, setFavourite] = useLocalstorage("FAVOURITS", []);
 
   const handleSelectId = (id) => {
     setSelectId((prevId) => (prevId === id ? null : id));
@@ -32,8 +32,6 @@ function App() {
     setFavourite((prevFav) => prevFav.filter((fav) => fav.id !== char.id));
   };
   const isAddFavourite = favourite.map((fav) => fav.id).includes(selectId);
-
-
 
   return (
     <div className="app">
